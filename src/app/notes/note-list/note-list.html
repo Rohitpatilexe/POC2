@@ -1,5 +1,14 @@
 <div class="note-container">
-  <h2>My Collaborative Notes</h2>
+  <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>My Collaborative Notes</h2>
+    <button (click)="logout()" style="background-color: #ff4444; color: white; padding: 5px 10px; border: none; cursor: pointer;">
+      Logout
+    </button>
+  </div>
+
+  <button (click)="addDummyNote()" style="margin-bottom: 20px; padding: 10px;">
+    + Add Random Note
+  </button>
 
   <ul>
     <li *ngFor="let note of notes$ | async">
