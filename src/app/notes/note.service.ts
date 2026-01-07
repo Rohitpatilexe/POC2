@@ -23,6 +23,13 @@ export class NoteService {
     const updatedNotes = currentNotes.filter(n => n.id !== id);// Filter keeps everything that DOES NOT match the ID.
     this._notes.next(updatedNotes);
   }
+  // New Method: Find a single note by ID
+  getNote(id: number): Note | undefined {
+    // 1. Look inside the current list
+    const currentNotes = this._notes.getValue();
+    // 2. Find the one where note.id matches the id we asked for
+    return currentNotes.find(n => n.id === id);
+  }
 }
 
 
