@@ -1,59 +1,45 @@
-<div class="note-container" style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: sans-serif;">
+<div class="notes-page">
+  <div class="container">
 
-  <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px solid #eee;">
-    <h2 style="margin: 0; color: #2c3e50;">My Collaborative Notes</h2>
-    <button (click)="logout()" 
-            style="background-color: #ff4444; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-      Logout
-    </button>
-  </div>
+    <header class="notes-header">
+      <h2>My Collaborative Notes</h2>
+      <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+    </header>
 
-  <form [formGroup]="noteform" (ngSubmit)="addnote()" 
-        style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e9ecef;">
-    
-    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; color: #555;">Create New Note</h3>
-
-    <div style="margin-bottom: 15px;">
-      <input type="text" formControlName="title" placeholder="Note Title" 
-             style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-    </div>
-    
-    <div style="margin-bottom: 15px;">
-      <textarea formControlName="content" placeholder="Write your thoughts here..." 
-                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; height: 80px; box-sizing: border-box; font-family: inherit;"></textarea>
-    </div>
-
-    <button type="submit" [disabled]="noteform.invalid" 
-            style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
-      Save Note
-    </button>
-  </form>
-
-  <div>
-    <h3 style="margin-bottom: 15px; color: #555;">Your Notes</h3>
-    
-    <ul style="list-style: none; padding: 0;">
-      <li *ngFor="let note of notes$ | async" 
-          style="background: white; border: 1px solid #ddd; margin-bottom: 15px; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: flex-start; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-        
-        <div style="margin-right: 15px;">
-          <a [routerLink]="['/notes', note.id]" style="text-decoration: none; color: #007bff; display: block; margin-bottom: 5px;">
-            <h4 style="margin: 0; font-size: 18px;">{{ note.title }}</h4>
-          </a>
-          <p style="margin: 0; color: #666; line-height: 1.4;">{{ note.content }}</p>
+    <section class="create-note-section">
+      <form [formGroup]="noteform" (ngSubmit)="addnote()" class="card create-note-form">
+        <h3>Create New Note</h3>
+        <div class="form-group">
+          <input type="text" formControlName="title" placeholder="Note Title" class="form-control">
         </div>
+        <div class="form-group">
+          <textarea formControlName="content" placeholder="Write your thoughts here..." class="form-control"
+            rows="3"></textarea>
+        </div>
+        <button type="submit" [disabled]="noteform.invalid" class="btn btn-primary full-width">Save Note</button>
+      </form>
+    </section>
 
-        <button (click)="deleteNote(note.id)" 
-                style="background: white; border: 1px solid #ff4444; color: #ff4444; padding: 6px 12px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 14px;">
-          Delete
-        </button>
+    <section class="notes-list-section">
+      <h3 class="section-title">Your Notes</h3>
 
-      </li>
-    </ul>
+      <div class="notes-grid">
+        <div *ngFor="let note of notes$ | async" class="card note-card">
+          <div class="note-content" [routerLink]="['/notes', note.id]">
+            <h4 class="note-title">{{ note.title }}</h4>
+            <p class="note-preview">{{ note.content }}</p>
+          </div>
+          <div class="note-actions">
+            <button (click)="deleteNote(note.id)" class="btn btn-danger btn-sm">Delete</button>
+          </div>
+        </div>
+      </div>
 
-    <p *ngIf="(notes$ | async)?.length === 0" style="text-align: center; color: #999; margin-top: 30px;">
-      No notes yet. Add one above!
-    </p>
+      <div *ngIf="(notes$ | async)?.length === 0" class="empty-state">
+        <p>No notes yet. Add one above!</p>
+      </div>
+
+    </section>
+
   </div>
-
 </div>

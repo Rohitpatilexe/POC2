@@ -1,26 +1,30 @@
-<div class="detail-container" style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; font-family: sans-serif;">
+<div class="detail-page">
+  <div class="container">
 
-  <div *ngIf="note; else notFound">
-    
-    <h1 style="margin-top: 0; color: #2c3e50;">{{ note.title }}</h1>
-    
-    <div style="background: #f9f9f9; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
-      <p style="white-space: pre-wrap; line-height: 1.6;">{{ note.content }}</p>
+    <div class="navigation-actions">
+      <a routerLink="/notes" class="btn btn-secondary">
+        &larr; Back to List
+      </a>
     </div>
 
-    <div style="color: #999; font-size: 12px; margin-bottom: 20px;">
-      Note ID: {{ note.id }}
+    <div *ngIf="note; else notFound" class="card detail-card">
+      <header class="detail-header">
+        <h1>{{ note.title }}</h1>
+        <span class="meta-id">ID: {{ note.id }}</span>
+      </header>
+
+      <div class="detail-content">
+        <p>{{ note.content }}</p>
+      </div>
     </div>
+
+    <ng-template #notFound>
+      <div class="card not-found-card">
+        <h2>Note not found!</h2>
+        <p>This note usually doesn't exist or was deleted.</p>
+        <a routerLink="/notes" class="btn btn-primary">Go Home</a>
+      </div>
+    </ng-template>
 
   </div>
-
-  <ng-template #notFound>
-    <h2 style="color: #ff4444;">Note not found!</h2>
-    <p>This note usually doesn't exist or was deleted.</p>
-  </ng-template>
-
-  <a routerLink="/notes" style="display: inline-block; padding: 10px 20px; background-color: #666; color: white; text-decoration: none; border-radius: 4px;">
-    &larr; Back to List
-  </a>
-
 </div>
