@@ -1,42 +1,61 @@
 <div class="notes-page">
   <div class="container">
 
-    <header class="notes-header">
-      <h2>My Collaborative Notes</h2>
-      <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+    <header class="notes-header glass-panel">
+      <div class="header-brand">
+        <h1>Notes</h1>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-danger btn-sm" (click)="logout()">
+          <span>Log Out</span>
+        </button>
+      </div>
     </header>
 
     <section class="create-note-section">
-      <form [formGroup]="noteform" (ngSubmit)="addnote()" class="card create-note-form">
-        <h3>Create New Note</h3>
-        <div class="form-group">
-          <input type="text" formControlName="title" placeholder="Note Title" class="form-control">
+      <form [formGroup]="noteform" (ngSubmit)="addnote()" class="glass-panel create-note-form">
+        <div class="form-header">
+          <h3>New Note</h3>
         </div>
-        <div class="form-group">
-          <textarea formControlName="content" placeholder="Write your thoughts here..." class="form-control"
-            rows="3"></textarea>
+        <div class="form-body">
+          <div class="form-group">
+            <input type="text" formControlName="title" placeholder="What's on your mind?" class="input-title">
+          </div>
+          <div class="form-group">
+            <textarea formControlName="content" placeholder="Start typing..." class="input-content" rows="3"></textarea>
+          </div>
         </div>
-        <button type="submit" [disabled]="noteform.invalid" class="btn btn-primary full-width">Save Note</button>
+        <div class="form-footer">
+          <button type="submit" [disabled]="noteform.invalid" class="btn btn-primary">
+            <span>Save Note</span>
+          </button>
+        </div>
       </form>
     </section>
 
     <section class="notes-list-section">
-      <h3 class="section-title">Your Notes</h3>
+      <div class="section-header">
+        <h3 class="section-title">Your Collection</h3>
+        <span class="note-count" *ngIf="(notes$ | async) as notes">{{ notes.length }} notes</span>
+      </div>
 
       <div class="notes-grid">
-        <div *ngFor="let note of notes$ | async" class="card note-card">
+        <div *ngFor="let note of notes$ | async" class="glass-panel note-card">
           <div class="note-content" [routerLink]="['/notes', note.id]">
             <h4 class="note-title">{{ note.title }}</h4>
             <p class="note-preview">{{ note.content }}</p>
           </div>
           <div class="note-actions">
-            <button (click)="deleteNote(note.id)" class="btn btn-danger btn-sm">Delete</button>
+            <button (click)="deleteNote(note.id)" class="btn btn-icon-danger" title="Delete Note">
+              <span class="icon">×</span>
+            </button>
           </div>
         </div>
       </div>
 
       <div *ngIf="(notes$ | async)?.length === 0" class="empty-state">
-        <p>No notes yet. Add one above!</p>
+        <div class="empty-icon">📝</div>
+        <p>No notes yet. Create your first one!</p>
       </div>
 
     </section>
